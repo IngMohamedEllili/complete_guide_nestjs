@@ -40,6 +40,7 @@
     "nestjs-eventstore": "^2.1.0",
     "node-eventstore-client": "^0.2.18",
     "node-nats-streaming": "^0.3.2",
+    "pg": "^8.7.1",
     "psx-nestjs-eventstore": "^1.4.16",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
