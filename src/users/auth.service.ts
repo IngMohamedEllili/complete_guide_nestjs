@@ -2,12 +2,15 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { UsersService } from "./users.service";
 import { promisify } from "util";
 import { randomBytes, scrypt as _scrypt } from "crypto";
+import { JwtService } from "@nestjs/jwt";
+import { User } from "./user.entity";
 
 const scrypt = promisify(_scrypt)
 
 @Injectable()
 export class AuthService{
-  constructor(private userService: UsersService){}
+  constructor(private userService: UsersService
+    ){}
 
   async signup(email: string, password: string){
     // fetch if email in use

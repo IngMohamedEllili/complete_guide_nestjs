@@ -1,19 +1,44 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CurrentUser } from 'src/users/decorators/current-user-decorator';
 import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
+import { CreateReportCommand } from './commands/impl/create-report.command';
+import { DeleteReportCommand } from './commands/impl/delete-report.command';
+import { UpdateReportCommand } from './commands/impl/update-report.command';
 import { CreateReportDto } from './dtos/create-report.dto';
 import { GetEstimateDto } from './dtos/get-estimate.dto';
-import { Report } from './report.entity';
+import { UpdateReportDto } from './dtos/update-report.dto';
+import { GetOneReport } from './queries/impl/get-one-report.query';
+import { GetReportQuery } from './queries/impl/get-report.query';
+import { Report } from './entities/report.entity';
 
 @Injectable()
 export class ReportsService {
-  constructor(@InjectRepository(Report) private repo: Repository<Report>){}
+  constructor(
+    @InjectRepository(Report) private repo: Repository<Report>,
+    private readonly _commandBus : CommandBus,
+    private readonly _queryBus : QueryBus
+    ){}
 
-  create(reportDto: CreateReportDto, user: User){
-    const report =  this.repo.create(reportDto)
-    report.user= user
-    return this.repo.save(report)
+  async findReports(){
+    return this._queryBus.execute(new GetReportQuery())
+  }
+
+  async findReport(id : number){
+    return this._queryBus.execute(new GetOneReport(id))
+  }
+  async createRepo(reportDto: CreateReportDto){
+   return await this._commandBus.execute(new CreateReportCommand(reportDto))
+  }
+
+  async deleteRepo(id: string){
+    return this._commandBus.execute(new DeleteReportCommand(parseInt(id)))
+  }
+
+  async updateReport(id: string, updateReportDto : UpdateReportDto, user: User){
+    return this._commandBus.execute(new UpdateReportCommand(updateReportDto, parseInt(id),user))
   }
 
   async changeApproval(id: string, approved: boolean){
@@ -39,5 +64,6 @@ export class ReportsService {
     .setParameters({mileage : estimateDto.mileage})
     .limit(3)
     .getRawOne()
-  }
+  }  
+
 }

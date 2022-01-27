@@ -1,11 +1,14 @@
-import { User } from "../users/user.entity";
+import { User } from "../../users/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { plainToClass } from "class-transformer";
+import { AggregateRoot } from "@nestjs/cqrs";
+import { IAggregateEvent } from "nestjs-eventstore";
 
 @Entity()
-export class Report {
+export class Report extends AggregateRoot<IAggregateEvent>{
 
   @PrimaryGeneratedColumn()
-  id: number
+  userID: number
 
   @Column({ default: false })
   approved: boolean;
@@ -33,4 +36,9 @@ export class Report {
 
   @ManyToOne(()=> User, (user) => user.reports)
   user: User
-}
+
+  toDto(){
+    return plainToClass(Report, this)
+  }
+  
+  }

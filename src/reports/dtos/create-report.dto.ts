@@ -1,4 +1,4 @@
-import { IsBoolean, IsLatitude, IsLongitude, IsNumber, IsString, Max, Min } from "class-validator"
+import { IsLatitude, IsLongitude, IsNumber, IsString, Max, Min } from "class-validator"
 
 export class CreateReportDto{
   @IsNumber()

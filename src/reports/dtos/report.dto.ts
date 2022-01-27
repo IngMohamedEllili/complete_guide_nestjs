@@ -1,11 +1,11 @@
-import { Expose, Transform } from "class-transformer";
-import { IsBoolean } from "class-validator";
-import { User } from "../../users/user.entity";
+import { Exclude, Expose, Transform } from "class-transformer";
+import { AbstractDto } from "./abstract.dto";
 
-export class ReportDto{
+export class ReportDto {
+
   @Expose()
-  id: number
-
+  reportId: number
+  
   @Expose()
   price: number
   
@@ -33,4 +33,5 @@ export class ReportDto{
 
   @Expose()
   approved: Boolean
+
 }

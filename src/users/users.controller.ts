@@ -13,10 +13,12 @@ import { UsersService } from './users.service';
 @Controller('auth')
 @Serialize(UserDto)
 export class UsersController {
-  constructor(private usersService: UsersService, private authService: AuthService){}
+  constructor(
+    private usersService: UsersService, 
+    private authService: AuthService){}
 
   @Get('/all')
-  findAll(){
+  async findAll(){
     return this.usersService.findAll()
   }
 

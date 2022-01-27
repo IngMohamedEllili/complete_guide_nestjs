@@ -8,12 +8,12 @@ import { UsersService } from './users.service';
 
 @Module({
   imports: [ 
-    TypeOrmModule.forFeature([User])
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [UsersController],
   providers: [
     UsersService, 
-    AuthService
+    AuthService,
   ]
 })
 export class UsersModule {
