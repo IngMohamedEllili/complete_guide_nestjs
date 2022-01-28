@@ -1,25 +1,30 @@
 import { Logger } from "@nestjs/common";
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { InjectRepository } from "@nestjs/typeorm";
+import { EventBusProvider } from "nestjs-eventstore";
 import { Report } from "src/reports/entities/report.entity";
+import { ReportCreatedEvent } from "src/reports/events/impl/report-created.event";
 import { Repository } from "typeorm";
 import { CreateReportCommand } from "../impl/create-report.command";
-import { EventPublisher } from 'nestjs-eventstore/dist/event-store/eventstore-cqrs/event-publisher'
 
 @CommandHandler(CreateReportCommand)
 export class CreateReportHandler implements ICommandHandler<CreateReportCommand>{
 
   constructor( 
     @InjectRepository(Report) private readonly _repository: Repository<Report>,
-    private readonly _publisher: EventPublisher
+    private readonly _publisher: EventBusProvider
     ){}
-
   async execute(command: CreateReportCommand) {
-    Logger.log('Async CreateDeliveryHandler...', 'CreateDeliveryCommand');
-    const {createReportDto} = command
-    const report = await this._repository.create(createReportDto)
-    const reportSaved = await this._repository.save(report)
-    const reportMeged = this._publisher.mergeObjectContext(reportSaved)
-      return reportSaved
+    Logger.log('Async CreateReportHandler...');
+    
+    const {createReportDto, user} = command
+    const report = this._repository.create(createReportDto)
+    report.user= user
+    const reportSaved = await this._repository.save(report)  
+    const reportToDto= reportSaved.toDto() 
+    const event = new ReportCreatedEvent(reportToDto)
+    this._publisher.publish(event,event.streamName)
+    reportSaved.commit()
+    return reportSaved
 }
 }

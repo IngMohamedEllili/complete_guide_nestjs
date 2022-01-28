@@ -8,8 +8,6 @@ import {
 } from 'typeorm';
 
 export abstract class AbstractEntity extends AggregateRoot<IAggregateEvent> {
-    @PrimaryGeneratedColumn()
-    id: string;
 
     @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
     createdAt: Date;
@@ -18,4 +16,4 @@ export abstract class AbstractEntity extends AggregateRoot<IAggregateEvent> {
     updatedAt: Date;
 
     abstract toDto();
-}
+}         

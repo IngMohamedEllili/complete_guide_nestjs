@@ -47,7 +47,7 @@
     "eventstore": "^1.15.5",
     "joi": "^17.5.0",
     "mysql": "^2.18.1",
-    "nestjs-eventstore": "^2.1.0",
+    "nestjs-eventstore": "git+https://github.com/AbdessalemLetaief/nestjs-eventstore",
     "node-eventstore-client": "^0.2.18",
     "node-nats-streaming": "^0.3.2",
     "passport": "^0.5.2",

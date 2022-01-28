@@ -1,7 +1,9 @@
+
 import { Exclude, Expose, Transform } from "class-transformer";
 import { AbstractDto } from "./abstract.dto";
 
-export class ReportDto {
+
+export class ReportDto extends AbstractDto{
 
   @Expose()
   reportId: number

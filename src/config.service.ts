@@ -1,9 +1,9 @@
 import * as dotenv from 'dotenv'
 
-export class ConfigService {
+export class ConfigServices {
   constructor() {
       dotenv.config({
-          path: `.env`,
+          path: `.env.development`,
       });
   }
 
@@ -21,31 +21,29 @@ export class ConfigService {
 
   get eventStoreConfig() {
     return {
-        protocol: this.get('EVENT_STORE_PROTOCOL') || 'http',
+        protocol:'http',
         connectionSettings: {
             defaultUserCredentials: {
-                username:
-                    this.get('EVENT_STORE_CREDENTIALS_USERNAME') || 'admin',
-                password:
-                    this.get('EVENT_STORE_CREDENTIALS_PASSWORD') ||
-                    'changeit',
+                username:'admin',
+                password:'changeit',
             },
             verboseLogging: true,
             failOnNoServerResponse: true,
             // log: console, // TODO: improve Eventstore logger (separate chanel)
         },
         tcpEndpoint: {
-            host: this.get('EVENT_STORE_HOSTNAME') || 'localhost',
-            port: this.getNumber('EVENT_STORE_TCP_PORT') || 1113,
+            host: 'localhost',
+            port: 1113,
         },
         httpEndpoint: {
-            host: this.get('EVENT_STORE_HOSTNAME') || 'localhost',
-            port: this.getNumber('EVENT_STORE_HTTP_PORT') || 2113,
+            host: 'localhost',
+            port: 2113,
         },
         poolOptions: {
-            min: this.getNumber('EVENT_STORE_POOLOPTIONS_MIN') || 1,
-            max: this.getNumber('EVENT_STORE_POOLOPTIONS_MAX') || 10,
+            min: 1,
+            max: 10,
         },
     };
 }
+
 }

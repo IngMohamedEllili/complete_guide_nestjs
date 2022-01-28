@@ -1,3 +1,11 @@
-import { ReportAbstractEvent } from "./report-abstract.event";
+import { IAggregateEvent } from "nestjs-eventstore";
+import { ReportDto } from "src/reports/dtos/report.dto";
 
-export class ReportCreatedEvent extends ReportAbstractEvent{}
+
+export class ReportCreatedEvent implements IAggregateEvent{
+  constructor(public readonly reportDto : ReportDto){}
+  
+  get streamName(){
+    return `report - ${this.reportDto.reportId}`
+  }
+}

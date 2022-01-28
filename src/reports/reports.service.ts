@@ -1,7 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CurrentUser } from 'src/users/decorators/current-user-decorator';
 import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
 import { CreateReportCommand } from './commands/impl/create-report.command';
@@ -29,8 +28,9 @@ export class ReportsService {
   async findReport(id : number){
     return this._queryBus.execute(new GetOneReport(id))
   }
-  async createRepo(reportDto: CreateReportDto){
-   return await this._commandBus.execute(new CreateReportCommand(reportDto))
+  async createRepo(reportDto: CreateReportDto, user: User){
+    Logger.log('created Report Service ...')
+   return await this._commandBus.execute(new CreateReportCommand(reportDto, user))
   }
 
   async deleteRepo(id: string){

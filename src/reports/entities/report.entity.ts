@@ -1,15 +1,15 @@
 import { User } from "../../users/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { plainToClass } from "class-transformer";
-import { AggregateRoot } from "@nestjs/cqrs";
-import { IAggregateEvent } from "nestjs-eventstore";
+import { ReportCreatedEvent } from "../events/impl/report-created.event";
+import { ReportDto } from "../dtos/report.dto";
+import { AbstractEntity } from "./abstract.entity";
+import { CreateReportDto } from "../dtos/create-report.dto";
 
 @Entity()
-export class Report extends AggregateRoot<IAggregateEvent>{
-
+export class Report extends AbstractEntity{
   @PrimaryGeneratedColumn()
-  userID: number
-
+  reportId: number
   @Column({ default: false })
   approved: boolean;
 
@@ -38,7 +38,8 @@ export class Report extends AggregateRoot<IAggregateEvent>{
   user: User
 
   toDto(){
-    return plainToClass(Report, this)
+    return plainToClass(ReportDto, this)
   }
   
+
   }

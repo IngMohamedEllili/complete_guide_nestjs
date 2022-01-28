@@ -2,11 +2,6 @@ import {
     EventStoreBusConfig,
     EventStoreSubscriptionType,
 } from 'nestjs-eventstore';
-import { ReportCreatedEvent } from 'src/reports/events/impl/report-created.event';
-
-const DeliveriesEventInstantiators = {
-    RerportCreatedEvent: data => new ReportCreatedEvent(data),
-};
 
 export const eventStoreBusConfig: EventStoreBusConfig = {
     subscriptions: [
@@ -18,16 +13,8 @@ export const eventStoreBusConfig: EventStoreBusConfig = {
             type: EventStoreSubscriptionType.Persistent,
             stream: '$ce-report',
             persistentSubscriptionName: 'g-report',
-        },
-        /* {
-            type: EventStoreSubscriptionType.Persistent,
-            stream: '$ce-orders',
-            persistentSubscriptionName: 'g-delivery',
-        }, */
-        
+        },      
 
     ],
-    eventInstantiators: {
-        ...DeliveriesEventInstantiators,
-    },
+    eventInstantiators: {},
 };

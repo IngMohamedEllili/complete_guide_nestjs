@@ -17,7 +17,7 @@ export class ReportsController {
   @Post()
   @UseGuards(AdminGuard)
   createReport(@Body() body: CreateReportDto, @CurrentUser() user: User): Promise<any>{
-    return this.reportService.createRepo(body)
+    return this.reportService.createRepo(body, user)
   }
 
   @Get()
