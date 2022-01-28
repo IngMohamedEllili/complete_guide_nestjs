@@ -24,7 +24,6 @@ export class CreateReportHandler implements ICommandHandler<CreateReportCommand>
     const reportToDto= reportSaved.toDto() 
     const event = new ReportCreatedEvent(reportToDto)
     this._publisher.publish(event,event.streamName)
-    reportSaved.commit()
     return reportSaved
 }
 }

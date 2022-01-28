@@ -7,6 +7,7 @@ import { QueryHandlers } from './queries/handlers';
 import { Report } from './entities/report.entity';
 import { ReportsController } from './reports.controller';
 import { ReportsService } from './reports.service';
+import { DeletedReportHandler } from './events/handlers/report-deleted.handler';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ReportsService } from './reports.service';
   controllers: [ReportsController],
   providers: [
     ReportsService,
+    DeletedReportHandler,
     ReportCreatedHandler,
     ...ReportHandlers,
     ...QueryHandlers]

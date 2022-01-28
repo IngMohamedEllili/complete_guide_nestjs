@@ -10,6 +10,7 @@ import { CreateReportDto } from "../dtos/create-report.dto";
 export class Report extends AbstractEntity{
   @PrimaryGeneratedColumn()
   reportId: number
+
   @Column({ default: false })
   approved: boolean;
 
