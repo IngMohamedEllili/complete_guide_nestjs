@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { CurrentUser } from '../users/decorators/current-user-decorator';
-import { User } from '../users/user.entity';
+import { User } from '../users/entities/user.entity';
 import { CreateReportDto } from './dtos/create-report.dto';
 import { ReportsService } from './reports.service';
 import { ApproveReportDto } from './dtos/approve-report.dto';

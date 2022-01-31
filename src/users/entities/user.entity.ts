@@ -1,4 +1,4 @@
-import { Report } from "../reports/entities/report.entity";
+import { Report } from "../../reports/entities/report.entity";
 import { 
   AfterInsert, 
   AfterRemove, 
@@ -8,9 +8,13 @@ import {
   OneToMany, 
   PrimaryGeneratedColumn 
 } from "typeorm";
+import { AggregateRoot } from "@nestjs/cqrs";
+import { AbstractEntity } from "./abstract.entity";
+import { plainToClass } from "class-transformer";
+import { UserDto } from "../dtos/user.dto";
 
 @Entity()
-export class User {
+export class User extends AbstractEntity{
 
   @PrimaryGeneratedColumn()
   id: number
@@ -40,6 +44,10 @@ export class User {
   @AfterRemove()
   logRemove(){
     console.log('Removed User with ID ', this.id)
+  }
+
+  toDto() {
+      return plainToClass(UserDto, this)
   }
 
 }

@@ -1,4 +1,4 @@
-import { User } from "../../users/user.entity";
+import { User } from "../../users/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { plainToClass } from "class-transformer";
 import { ReportCreatedEvent } from "../events/impl/report-created.event";

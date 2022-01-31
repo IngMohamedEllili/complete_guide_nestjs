@@ -21,9 +21,9 @@ export class DeleteReportHandler implements ICommandHandler<DeleteReportCommand>
       if(!report){
          throw new NotFoundException("report not found")
       }
-      const event = new DeletedReportEvent()
-      this._publisher.publish(event,event.streamName)
       this.repo.delete(report)
+      const event = new DeletedReportEvent(id)
+      this._publisher.publish(event,event.streamName)
       
    }
 }

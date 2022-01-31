@@ -5,6 +5,6 @@ import { DeletedReportEvent } from "../impl/report-deleted.event";
 @EventsHandler(DeletedReportEvent)
 export class DeletedReportHandler implements IEventHandler<DeletedReportEvent>{
   handle(event: DeletedReportEvent) {
-      Logger.log(event, 'report Deleted') 
+      Logger.log(event, 'ReportDeletedEvent') 
   }
 }

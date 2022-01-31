@@ -1,6 +1,6 @@
 import { ICommand } from "@nestjs/cqrs";
 import { UpdateReportDto } from "src/reports/dtos/update-report.dto";
-import { User } from "src/users/user.entity";
+import { User } from "src/users//entities/user.entity";
 
 export class UpdateReportCommand implements ICommand{
   constructor(

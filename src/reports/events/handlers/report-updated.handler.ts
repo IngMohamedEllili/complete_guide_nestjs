@@ -5,6 +5,6 @@ import { ReportUpdatedEvent } from "../impl/report-updated.event";
 @EventsHandler(ReportUpdatedEvent)
 export class ReportUpdatedHandler implements IEventHandler<ReportUpdatedEvent>{
   async handle(event: ReportUpdatedEvent) {
-      Logger.log('report updated', event)
+      Logger.log(event, 'report updated')
   }
 }

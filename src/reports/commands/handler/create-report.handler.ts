@@ -1,5 +1,5 @@
 import { Logger } from "@nestjs/common";
-import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
+import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 import { InjectRepository } from "@nestjs/typeorm";
 import { EventBusProvider } from "nestjs-eventstore";
 import { Report } from "src/reports/entities/report.entity";
@@ -12,7 +12,7 @@ export class CreateReportHandler implements ICommandHandler<CreateReportCommand>
 
   constructor( 
     @InjectRepository(Report) private readonly _repository: Repository<Report>,
-    private readonly _publisher: EventBusProvider
+    private readonly _publisher: EventBusProvider,
     ){}
   async execute(command: CreateReportCommand) {
     Logger.log('Async CreateReportHandler...');

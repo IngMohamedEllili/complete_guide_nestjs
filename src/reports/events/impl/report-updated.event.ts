@@ -1,11 +1,9 @@
-
 import { IAggregateEvent } from "nestjs-eventstore";
-import { ReportDto } from "src/reports/dtos/report.dto";
 import { UpdateReportDto } from "src/reports/dtos/update-report.dto";
 
 export class ReportUpdatedEvent implements IAggregateEvent{
-  constructor(public readonly reportDto : ReportDto){}
+  constructor(public readonly reportDto : UpdateReportDto){}
   get streamName(){
-    return `report - ${this.reportDto.reportId}`
+    return `report - ${this.reportDto}`
   }
 }

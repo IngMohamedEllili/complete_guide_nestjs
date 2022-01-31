@@ -2,7 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import { Test } from '@nestjs/testing'
 import { doesNotMatch } from 'assert';
 import { AuthService } from './auth.service'
-import { User } from './user.entity'
+import { User } from './entities/user.entity'
 import { UsersService } from './users.service'
 
 
@@ -19,11 +19,11 @@ beforeEach(async () =>{
       const filtredUser = users.filter(user => user.email === email)
       return Promise.resolve(filtredUser);
     },
-    create: (email: string, password: string) => {
+    /* create: (email: string, password: string) => {
       const user = {id: Math.floor(Math.random()*9999), email, password} as User
       users.push(user)
       return Promise.resolve(user);
-    }
+    } */
       
   }
   

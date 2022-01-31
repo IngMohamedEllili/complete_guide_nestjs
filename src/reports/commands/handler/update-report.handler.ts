@@ -13,7 +13,7 @@ constructor(
   @InjectRepository(Report) private readonly _repository : Repository<Report>,
   private readonly _publisher: EventBusProvider){}
 
-  async execute(command: UpdateReportCommand): Promise<any> {
+  async execute(command: UpdateReportCommand) {
       const { updateReportDto, id } = command
       const report = await this._repository.findOne(id)
       if(!report){
@@ -21,6 +21,7 @@ constructor(
       }
       const reportAssign = Object.assign(report, updateReportDto)
       const reportUpdated = this._repository.save(reportAssign)
-      this._publisher.publish(new ReportUpdatedEvent(reportAssign.toDto()), new ReportUpdatedEvent(reportAssign.toDto()).streamName)
+      this._publisher.publish(new ReportUpdatedEvent(updateReportDto), new ReportUpdatedEvent(updateReportDto).streamName)
+      return reportUpdated
   }
 }

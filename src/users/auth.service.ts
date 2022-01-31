@@ -3,7 +3,7 @@ import { UsersService } from "./users.service";
 import { promisify } from "util";
 import { randomBytes, scrypt as _scrypt } from "crypto";
 import { JwtService } from "@nestjs/jwt";
-import { User } from "./user.entity";
+import { User } from "./entities/user.entity";
 
 const scrypt = promisify(_scrypt)
 
@@ -12,7 +12,7 @@ export class AuthService{
   constructor(private userService: UsersService
     ){}
 
-  async signup(email: string, password: string){
+  async signup(email: string, pwd: string){
     // fetch if email in use
     const useremail = await this.userService.find(email)
     if(useremail.length){
@@ -23,11 +23,11 @@ export class AuthService{
       //generate a salt
     const salt = randomBytes(8).toString('hex')
       //hash the salt and the password together
-    const hash = (await scrypt(password, salt, 32)) as Buffer
+    const hash = (await scrypt(pwd, salt, 32)) as Buffer
       // join the hashed result with salt
-    const result = salt + '.' + hash.toString('hex')
+    const password = salt + '.' + hash.toString('hex')
     //create user
-    const user = await this.userService.create(email,result)
+    const user = await this.userService.create({email,password})
     return user;
 
   }
