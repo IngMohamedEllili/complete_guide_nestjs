@@ -8,7 +8,12 @@ export const eventStoreBusConfig: EventStoreBusConfig = {
         // TODO: read about subs in eventStore, how can they help us.
         // TODO: dont forget to create a `Persistent Subscription`
         // TODO: and enable `resolveLinkTos` https://eventstore.org/docs/dotnet-api/reading-events/index.html
-        
+        {
+            // persistent subscription
+            type: EventStoreSubscriptionType.Persistent,
+            stream: '$ce-report',
+            persistentSubscriptionName: 'g-report',
+        },
 
     ],
     eventInstantiators: {},
