@@ -23,6 +23,11 @@ export const eventStoreBusConfig: EventStoreBusConfig = {
             stream: '$ce-report',
             persistentSubscriptionName: 'g-report',
         },
+        { 
+            type: EventStoreSubscriptionType.Persistent,
+            stream: '$ce-user',
+            persistentSubscriptionName: 'g-report'
+        }
 
     ],
     eventInstantiators: {

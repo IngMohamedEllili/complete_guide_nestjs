@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv'
+import { RedisModuleOptions } from 'nestjs-redis'
 
 export class ConfigServices {
   constructor() {
@@ -44,6 +45,5 @@ export class ConfigServices {
             max: 10,
         },
     };
-}
-
+  }
 }

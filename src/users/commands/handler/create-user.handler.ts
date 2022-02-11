@@ -14,8 +14,8 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand>{
   async execute(command: CreateUserCommand): Promise<any> {
     const { createUserDto } = command
     const user = this._repository.create(createUserDto)
-    const userSaved = this._repository.save(user)
-    const userToDto = (await userSaved).toDto()
+    const userSaved = await this._repository.save(user)
+    const userToDto =  userSaved.toDto()
     const event = new CreatedUserEvent(userToDto)
     this._publisher.publish(event, event.streamName)
     return userSaved

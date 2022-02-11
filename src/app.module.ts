@@ -36,7 +36,7 @@ import { eventStoreBusConfig } from './providers/event-bus.provider';
           inject: [ConfigServices],
       },
       eventStoreBusConfig,
-  ),
+    ),
   ],
   controllers: [AppController],
   providers: [
