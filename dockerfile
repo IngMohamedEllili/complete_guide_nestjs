@@ -1,16 +1,10 @@
-FROM node:12.13.1 as development
+FROM node:12.13.1
 WORKDIR /app
-
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
-#COPY ./node_modules /app/node_modules
+COPY ./*.json ./
+COPY ./ormconfig.js ./
+RUN mkdir src test node_modules
+COPY ./src /app/src
+COPY ./test /app/test
+COPY ./node_modules /app/node_modules
+COPY ./.env ./
 CMD ["npm","run","start:dev"]
-
-FROM MySQL:latest
-ENV MYSQL_NAME: sql-db
-ENV MYSQL_DATABASE: db
-ENV MYSQL_USER: root
-ENV MYSQL_ROOT_PASSWORD: Box2home.
-EXPOSE 3306:3306

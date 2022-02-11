@@ -4,11 +4,12 @@ import { AppModule } from './app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { join } from 'path/posix';
 import { Logger, NestApplicationOptions } from '@nestjs/common';
+import { ExpressAdapter } from '@nestjs/platform-express';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestApplication>(
-    AppModule,)
-    // new ExpressAdapter(),
+    AppModule,new ExpressAdapter())
+
     app.connectMicroservice<MicroserviceOptions>(
     {
       transport : Transport.REDIS, 

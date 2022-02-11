@@ -7,7 +7,7 @@ export class ReportCreatedEvent implements IAggregateEvent{
   constructor(public readonly reportDto : ReportDto){}
   
   get streamName(){
-    Logger.log('ReportCreatedevent')
+    Logger.log(`report - ${this.reportDto.reportId}`)
     return `report - ${this.reportDto.reportId}`
   }
 }

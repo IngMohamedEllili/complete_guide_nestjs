@@ -1,13 +1,20 @@
-import { Controller, Get } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
+import { Body, CacheInterceptor, CacheKey, CacheTTL, CACHE_MANAGER, Controller, Get, Inject, UseInterceptors } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
+@UseInterceptors(CacheInterceptor)
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  
+  constructor(
+    private readonly appService: AppService) {}
 
-  @MessagePattern('getHello')
-  getHello(name: string): string {
-    return this.appService.getHello(name);
+  
+  
+  @Get("auto-cache")
+  @CacheKey('mycustomkey')
+  @CacheTTL(500)
+  get(name: string): string{
+    return this.appService.getHello(name)
   }
+
 }

@@ -1,31 +1,10 @@
 version: '3.7'
 
 services:
-
-  main:
-    container_name: main
-    build:
-      context: .
-      target: development
-    volumes:
-      - .:/app
-      - /app/node_modules
-    ports:
-      - 9229:9229
-    command: npm run start:dev
-    env_file:
-      - .env.development
-    networks:
-      - webnet
-    depends_on:
-      - redis
-      - eventstore.db
-      - mysql_db
-      - adminer
-
   redis:
     container_name: redis
     image: redis:5
+    port: 6379
     networks:
       - webnet
 
@@ -51,36 +30,14 @@ services:
       - type: volume
         source: eventstore-volume-logs
         target: /c/data/eventstore/logs
-  
-  mysql_db:
-    image: mysql:5.7.12
-    restart: always
-    container_name: mysql5
-    ports:
-      - 6603:3306    
-    environment:
-      DB_CONTANER_NAME: sql-db
-      DB_ROOT_PASSWORD: Box2home.
-      DB_ROOT_USERNAME: root
-      DB_ROOT_DATABASE: db
-      DB_MYSQL_PORT: 3306
-    volumes:
-      - mysql-data:/home/mohamedellili/mysql/data
-      - mysql-conf:/home/mohamedellili/mysql/conf.d
-  
-  adminer:
-    image: adminer:latest
-    restart: unless-stopped
-    ports:
-      - 8000:8080
-    depends_on:
-      - mysql_db
-    environment:
-      ADMINER_DEFAULT_SERVER: mysql_db
+
+  adminer_container:
+        image: adminer:latest
+        ports: 
+          - 8080:8080
+
 networks:
   webnet:
 volumes:
   eventstore-volume-data:
   eventstore-volume-logs:
-  mysql-data:
-  mysql-conf:

@@ -9,12 +9,12 @@ const dbConfig = {
 switch(process.env.NODE_ENV){
   case 'development':
     Object.assign(dbConfig,{
-      type:'mysql',
-      host: "localhost",
+      type: 'mysql',
+      host: 'localhost',
       port: 3306,
-      username: "root",
-      password: "Box2home.",
-      database: "db",
+      username: 'root',
+      password: 'Box2home.',
+      database: 'db',
       entities: ['**/*.entity.js'],
     });
     break

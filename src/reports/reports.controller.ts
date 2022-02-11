@@ -1,4 +1,4 @@
-import { Body, CacheInterceptor, Controller, Delete, Get, HttpStatus, Inject, Param, Patch, Post, Put, Query, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, CacheInterceptor, CACHE_MANAGER, Controller, Delete, Get, HttpStatus, Inject, Logger, Param, Patch, Post, Put, Query, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CurrentUser } from '../users/decorators/current-user-decorator';
 import { User } from '../users/entities/user.entity';
 import { CreateReportDto } from './dtos/create-report.dto';
@@ -9,27 +9,22 @@ import { GetEstimateDto } from './dtos/get-estimate.dto';
 import { UpdateReportDto } from './dtos/update-report.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ClientProxy, Ctx, MessagePattern, Payload, RedisContext } from '@nestjs/microservices';
-
+import { Cache } from 'cache-manager';
+import { report } from 'process';
+import { map } from 'rxjs'
+import { Report } from './entities/report.entity';
 @Controller('reports')
 @ApiTags('Reports')
 export class ReportsController {
   constructor(
-    /* @Inject('REPORT_SERVICE') private readonly client: ClientProxy, */
-    private reportService: ReportsService,
+    private reportService: ReportsService
     ){}
-
-  /*   @MessagePattern('time.us.*')
-    getDate(@Payload() data: number[], @Ctx() context: RedisContext) {
-      console.log(`Subject: ${context.getChannel()}`); // e.g. "time.us.east"
-      return new Date().toLocaleTimeString();
-    } */
-
-
-  @Post()
+  @Post('add')
   @UseInterceptors(CacheInterceptor)
   @UseGuards(AdminGuard)
-  createReport(@Body() body: CreateReportDto, @CurrentUser() user: User): Promise<any>{
-    return this.reportService.createRepo(body, user)
+  async createReport(@Body() body: CreateReportDto, @CurrentUser() user: User): Promise<any>{
+    const report = await this.reportService.createRepo(body, user)
+    return report
   }
 
   @Get()
@@ -39,8 +34,11 @@ export class ReportsController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'reports Found'})
-  getAll(){
-    return this.reportService.findReports()
+  async getAll(){
+    const reports = await this.reportService.findReports()
+    return reports.map((report)=>{
+      return report.reportId
+    })
   }
 
   @Patch('/:id')

@@ -11,9 +11,16 @@ import { DeletedReportHandler } from './events/handlers/report-deleted.handler';
 import { ReportSagas } from './sagas/report.saga';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { join } from 'path/posix';
+import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
+    CacheModule.register({
+      store: redisStore,
+      host: 'localhost',
+      port: 6379,
+      ttl: 300
+    }),
     CacheModule.register(),
     TypeOrmModule.forFeature([Report]),
     CqrsModule,
