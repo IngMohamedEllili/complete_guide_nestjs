@@ -73,5 +73,3 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 Nest is [MIT licensed](LICENSE).
 
 
-
-tank text initial cost slender slice army interest slam release practice must orbit food cliff caught learn evoke figure approve mean carbon raw amused
