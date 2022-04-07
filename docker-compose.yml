@@ -4,7 +4,6 @@ services:
   redis:
     container_name: redis
     image: redis:5
-    port: 6379
     networks:
       - webnet
 
@@ -31,10 +30,6 @@ services:
         source: eventstore-volume-logs
         target: /c/data/eventstore/logs
 
-  adminer_container:
-        image: adminer:latest
-        ports: 
-          - 8080:8080
 
 networks:
   webnet:
