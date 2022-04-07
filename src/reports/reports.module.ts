@@ -9,8 +9,6 @@ import { ReportsController } from './reports.controller';
 import { ReportsService } from './reports.service';
 import { DeletedReportHandler } from './events/handlers/report-deleted.handler';
 import { ReportSagas } from './sagas/report.saga';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { join } from 'path/posix';
 import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
@@ -24,15 +22,6 @@ import * as redisStore from 'cache-manager-redis-store';
     CacheModule.register(),
     TypeOrmModule.forFeature([Report]),
     CqrsModule,
-    /* ClientsModule.register([
-      {
-        name: 'REPORT_SERVICE',
-        transport : Transport.REDIS,
-        options : {
-          url: 'redis://localhost:6379'
-        }
-      }
-    ]), */
   ],
   controllers: [ReportsController],
   providers: [
