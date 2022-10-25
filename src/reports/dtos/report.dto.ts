@@ -1,39 +1,35 @@
+import { Exclude, Expose, Transform } from 'class-transformer';
+import { AbstractDto } from './abstract.dto';
 
-import { Exclude, Expose, Transform } from "class-transformer";
-import { AbstractDto } from "./abstract.dto";
-
-
-export class ReportDto extends AbstractDto{
+export class ReportDto extends AbstractDto {
+  @Expose()
+  reportId: number;
 
   @Expose()
-  reportId: number
-  
-  @Expose()
-  price: number
-  
-  @Expose()
-  year: number
+  price: number;
 
   @Expose()
-  lng: number
+  year: number;
 
   @Expose()
-  lat: number
+  lng: number;
 
   @Expose()
-  make: string
+  lat: number;
 
   @Expose()
-  model: string
+  make: string;
 
   @Expose()
-  mileage: string
+  model: string;
+
+  @Expose()
+  mileage: string;
 
   @Transform(({ obj }) => obj.user.id)
   @Expose()
   userId: number;
 
   @Expose()
-  approved: Boolean
-
+  approved: Boolean;
 }

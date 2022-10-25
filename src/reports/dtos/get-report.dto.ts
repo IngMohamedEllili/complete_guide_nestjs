@@ -1,13 +1,12 @@
-import { Expose } from "class-transformer"
-import { IsString } from "class-validator"
+import { Expose } from 'class-transformer';
+import { IsString } from 'class-validator';
 
-export class GetReportDto{
+export class GetReportDto {
+  @Expose()
+  @IsString()
+  make: string;
 
   @Expose()
   @IsString()
-  make: string
-  
-  @Expose()
-  @IsString()
-  model: string
+  model: string;
 }

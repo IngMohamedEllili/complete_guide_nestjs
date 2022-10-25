@@ -1,11 +1,11 @@
-import { ICommand } from "@nestjs/cqrs";
-import { UpdateReportDto } from "src/reports/dtos/update-report.dto";
-import { User } from "src/users//entities/user.entity";
+import { ICommand } from '@nestjs/cqrs';
+import { UpdateReportDto } from 'src/reports/dtos/update-report.dto';
+import { User } from 'src/users//entities/user.entity';
 
-export class UpdateReportCommand implements ICommand{
+export class UpdateReportCommand implements ICommand {
   constructor(
-    public readonly updateReportDto : UpdateReportDto,
-    public readonly id: number, 
-    public readonly user: User
-  ){}
+    public readonly updateReportDto: UpdateReportDto,
+    public readonly id: number,
+    public readonly user: User,
+  ) {}
 }

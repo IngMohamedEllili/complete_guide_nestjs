@@ -7,18 +7,16 @@ import { UserNotificationCommand } from 'src/users/commands/impl/notif-user.comm
 import { NotifiedUserEvent } from 'src/users/events/impl/user-notified.event';
 import { ReportCreatedEvent } from '../events/impl/report-created.event';
 @Injectable()
-export class ReportSagas{
-  reportCreated = (events$: EventObservable<any>): Observable<ICommand> =>{
-    return events$
-      .ofType(ReportCreatedEvent)
-      .pipe(
-        delay(1000),
-        map(event =>{
-          Logger.log('inside [reportSaga] saga', 'ReportSaga')
-          const reportId = event.reportDto
-          console.log(reportId)
-          return new UserNotificationCommand(reportId)
-        })
-      )
-  }
+export class ReportSagas {
+  reportCreated = (events$: EventObservable<any>): Observable<ICommand> => {
+    return events$.ofType(ReportCreatedEvent).pipe(
+      delay(1000),
+      map((event) => {
+        Logger.log('inside [reportSaga] saga', 'ReportSaga');
+        const reportId = event.reportDto;
+        console.log(reportId);
+        return new UserNotificationCommand(reportId);
+      }),
+    );
+  };
 }

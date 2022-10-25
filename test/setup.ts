@@ -1,6 +1,6 @@
-import { getConnection } from "typeorm"
+import { getConnection } from 'typeorm';
 
-global.afterEach(async()=>{
+global.afterEach(async () => {
   const conn = getConnection();
-  await conn.close()
-})
+  await conn.close();
+});

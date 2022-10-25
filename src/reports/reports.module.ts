@@ -17,7 +17,7 @@ import * as redisStore from 'cache-manager-redis-store';
       store: redisStore,
       host: 'localhost',
       port: 6379,
-      ttl: 300
+      ttl: 300,
     }),
     CacheModule.register(),
     TypeOrmModule.forFeature([Report]),
@@ -30,6 +30,7 @@ import * as redisStore from 'cache-manager-redis-store';
     DeletedReportHandler,
     ReportCreatedHandler,
     ...ReportHandlers,
-    ...QueryHandlers]
-  })
+    ...QueryHandlers,
+  ],
+})
 export class ReportsModule {}

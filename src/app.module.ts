@@ -1,8 +1,14 @@
-import { CacheInterceptor, CacheModule, MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
-import { ConfigModule, ConfigService  } from '@nestjs/config';
+import {
+  CacheInterceptor,
+  CacheModule,
+  MiddlewareConsumer,
+  Module,
+  ValidationPipe,
+} from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
-const  cookieSession = require('cookie-session');
+const cookieSession = require('cookie-session');
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ReportsModule } from './reports/reports.module';
@@ -20,7 +26,7 @@ import * as redisStore from 'cache-manager-redis-store';
       store: redisStore,
       host: 'localhost',
       port: 6379,
-      ttl: 300
+      ttl: 300,
     }),
     SharedModule,
     ConfigModule.forRoot({
@@ -28,19 +34,18 @@ import * as redisStore from 'cache-manager-redis-store';
       envFilePath: `.env`,
     }),
     CqrsModule,
-    ReportsModule, 
+    ReportsModule,
     UsersModule,
-    TypeOrmModule.forRoot(), 
+    TypeOrmModule.forRoot(),
     EventStoreCqrsModule.forRootAsync(
       {
-          useFactory: async (config: ConfigServices) => {
-              return {
-                  connectionSettings:
-                      config.eventStoreConfig.connectionSettings,
-                  endpoint: config.eventStoreConfig.tcpEndpoint,
-              };
-          },
-          inject: [ConfigServices],
+        useFactory: async (config: ConfigServices) => {
+          return {
+            connectionSettings: config.eventStoreConfig.connectionSettings,
+            endpoint: config.eventStoreConfig.tcpEndpoint,
+          };
+        },
+        inject: [ConfigServices],
       },
       eventStoreBusConfig,
     ),
@@ -49,21 +54,23 @@ import * as redisStore from 'cache-manager-redis-store';
   providers: [
     AppService,
     {
-    useClass: CacheInterceptor,
-    provide: APP_INTERCEPTOR,
-    useValue: new ValidationPipe({
-      whitelist: true
-    })
-    }
-  ]
+      useClass: CacheInterceptor,
+      provide: APP_INTERCEPTOR,
+      useValue: new ValidationPipe({
+        whitelist: true,
+      }),
+    },
+  ],
 })
 export class AppModule {
-  constructor(private configService: ConfigService){}
-  configure(consumer: MiddlewareConsumer){
-    consumer.apply(cookieSession({
-      keys: [this.configService.get('COOKIE_KEY')]
-    })
-    )
-    .forRoutes('*')
+  constructor(private configService: ConfigService) {}
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(
+        cookieSession({
+          keys: [this.configService.get('COOKIE_KEY')],
+        }),
+      )
+      .forRoutes('*');
   }
-} 
+}

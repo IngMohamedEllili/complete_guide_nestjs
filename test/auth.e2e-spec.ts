@@ -16,32 +16,32 @@ describe('auth system', () => {
   });
 
   it('handles a signup request', () => {
-    const email = 'alaladaza@gmail.com'
+    const email = 'alaladaza@gmail.com';
     return request(app.getHttpServer())
       .post('/auth/signup')
-      .send({email: email, password: 'passs'})
+      .send({ email: email, password: 'passs' })
       .expect(201)
-      .then((res)=>{
-        const { id, email } = res.body
-        expect(id).toBeDefined()
-        expect(email).toEqual(email)
-      })
+      .then((res) => {
+        const { id, email } = res.body;
+        expect(id).toBeDefined();
+        expect(email).toEqual(email);
+      });
   });
 
-  it('signup as a new user then get the current user', async()=>{
-    const email="aldaala@alla.com"
+  it('signup as a new user then get the current user', async () => {
+    const email = 'aldaala@alla.com';
     const res = await request(app.getHttpServer())
-    .post('/auth/signup')
-    .send({email,password:'alla'})
-    .expect(201)
+      .post('/auth/signup')
+      .send({ email, password: 'alla' })
+      .expect(201);
 
-    const cookie = res.get('Set-Cookie')
+    const cookie = res.get('Set-Cookie');
 
-    const {body} = await request(app.getHttpServer())
-    .get('/auth/whoami')
-    .set('Cookie', cookie)
-    .expect(200)
+    const { body } = await request(app.getHttpServer())
+      .get('/auth/whoami')
+      .set('Cookie', cookie)
+      .expect(200);
 
-    expect(body.email).toEqual(email)
-  })
+    expect(body.email).toEqual(email);
+  });
 });

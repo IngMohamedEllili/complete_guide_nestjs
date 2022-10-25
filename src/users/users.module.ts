@@ -11,20 +11,18 @@ import { UserNotificationHandler } from './commands/handler/notif-user.handler';
 import { ReportSagas } from 'src/reports/sagas/report.saga';
 
 @Module({
-  imports: [ 
-    TypeOrmModule.forFeature([User]),
-  ],
+  imports: [TypeOrmModule.forFeature([User])],
   controllers: [UsersController],
   providers: [
     CreateUserHandler,
     UserNotificationHandler,
     ...EventsHandler,
-    UsersService, 
+    UsersService,
     AuthService,
-  ]
+  ],
 })
 export class UsersModule {
-  configure(consumer: MiddlewareConsumer){
-    consumer.apply(CurrentUserMiddleware).forRoutes('*')
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(CurrentUserMiddleware).forRoutes('*');
   }
 }
