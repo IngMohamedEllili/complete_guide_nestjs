@@ -1,7 +1,4 @@
-import { CratedUserHandler } from "./user-created.handler";
-import { NotifiedUserHandler } from "./user-notified.handler";
+import { CratedUserHandler } from './user-created.handler';
+import { NotifiedUserHandler } from './user-notified.handler';
 
-export const EventsHandler=[
-  NotifiedUserHandler,
-  CratedUserHandler
-]
+export const EventsHandler = [NotifiedUserHandler, CratedUserHandler];

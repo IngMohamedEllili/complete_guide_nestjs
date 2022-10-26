@@ -1,28 +1,33 @@
-import { IsLatitude, IsLongitude, IsNumber, IsOptional, IsString } from "class-validator";
+import {
+  IsLatitude,
+  IsLongitude,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class UpdateReportDto {
   @IsString()
   @IsOptional()
-  make: string
+  make: string;
 
   @IsString()
   @IsOptional()
-  model: string
+  model: string;
 
-  
   @IsNumber()
   @IsOptional()
-  year: number
+  year: number;
 
   @IsLongitude()
   @IsOptional()
-  lng: number
+  lng: number;
 
   @IsLatitude()
   @IsOptional()
-  lat: number
+  lat: number;
 
   @IsNumber()
   @IsOptional()
-  mileage: number
+  mileage: number;
 }

@@ -1,46 +1,44 @@
-import { User } from "../../users/entities/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { plainToClass } from "class-transformer";
-import { ReportCreatedEvent } from "../events/impl/report-created.event";
-import { ReportDto } from "../dtos/report.dto";
-import { AbstractEntity } from "./abstract.entity";
-import { CreateReportDto } from "../dtos/create-report.dto";
+import { User } from '../../users/entities/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { plainToClass } from 'class-transformer';
+import { ReportCreatedEvent } from '../events/impl/report-created.event';
+import { ReportDto } from '../dtos/report.dto';
+import { AbstractEntity } from './abstract.entity';
+import { CreateReportDto } from '../dtos/create-report.dto';
 
 @Entity()
-export class Report extends AbstractEntity{
+export class Report extends AbstractEntity {
   @PrimaryGeneratedColumn()
-  reportId: number
+  reportId: number;
 
   @Column({ default: false })
   approved: boolean;
 
   @Column()
-  price: number
+  price: number;
 
   @Column()
-  make: string
+  make: string;
 
   @Column()
-  model: string
+  model: string;
 
   @Column()
-  year: number
+  year: number;
 
   @Column()
-  lng: number
+  lng: number;
 
   @Column()
-  lat: number
+  lat: number;
 
   @Column()
-  mileage: number
+  mileage: number;
 
-  @ManyToOne(()=> User, (user) => user.reports)
-  user: User
+  @ManyToOne(() => User, (user) => user.reports)
+  user: User;
 
-  toDto(){
-    return plainToClass(ReportDto, this)
+  toDto() {
+    return plainToClass(ReportDto, this);
   }
-  
-
-  }
+}

@@ -1,49 +1,49 @@
-import * as dotenv from 'dotenv'
-import { RedisModuleOptions } from 'nestjs-redis'
+import * as dotenv from 'dotenv';
+import { RedisModuleOptions } from 'nestjs-redis';
 
 export class ConfigServices {
   constructor() {
-      dotenv.config({
-          path: `.env.development`,
-      });
+    dotenv.config({
+      path: `.env.development`,
+    });
   }
 
   public get(key: string): string {
-      return process.env[key];
+    return process.env[key];
   }
 
   public getNumber(key: string): number {
-      return Number(this.get(key));
+    return Number(this.get(key));
   }
 
   get nodeEnv(): string {
-      return this.get('NODE_ENV') || 'development';
+    return this.get('NODE_ENV') || 'development';
   }
 
   get eventStoreConfig() {
     return {
-        protocol:'http',
-        connectionSettings: {
-            defaultUserCredentials: {
-                username:'admin',
-                password:'changeit',
-            },
-            verboseLogging: true,
-            failOnNoServerResponse: true,
-            // log: console, // TODO: improve Eventstore logger (separate chanel)
+      protocol: 'http',
+      connectionSettings: {
+        defaultUserCredentials: {
+          username: 'admin',
+          password: 'changeit',
         },
-        tcpEndpoint: {
-            host: 'localhost',
-            port: 1113,
-        },
-        httpEndpoint: {
-            host: 'localhost',
-            port: 2113,
-        },
-        poolOptions: {
-            min: 1,
-            max: 10,
-        },
+        verboseLogging: true,
+        failOnNoServerResponse: true,
+        // log: console, // TODO: improve Eventstore logger (separate chanel)
+      },
+      tcpEndpoint: {
+        host: 'localhost',
+        port: 1113,
+      },
+      httpEndpoint: {
+        host: 'localhost',
+        port: 2113,
+      },
+      poolOptions: {
+        min: 1,
+        max: 10,
+      },
     };
   }
 }

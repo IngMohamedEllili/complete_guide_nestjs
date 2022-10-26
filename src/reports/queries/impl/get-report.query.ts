@@ -1,3 +1,3 @@
-import { IQuery } from "@nestjs/cqrs";
+import { IQuery } from '@nestjs/cqrs';
 
-export class GetReportQuery{}
+export class GetReportQuery {}
